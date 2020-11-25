@@ -1,0 +1,1023 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+	>
+
+	<title>Irekua</title>
+
+	<link
+		rel="stylesheet"
+		href="reveal.js/dist/reset.css"
+	>
+	<link
+		rel="stylesheet"
+		href="reveal.js/dist/reveal.css"
+	>
+	<link
+		rel="stylesheet"
+		href="custom.css"
+	>
+	<link
+		rel="stylesheet"
+		href="reveal.js/dist/theme/black.css"
+		id="theme"
+	>
+
+	<!-- Theme used for syntax highlighted code -->
+	<link
+		rel="stylesheet"
+		href="reveal.js/plugin/highlight/monokai.css"
+		id="highlight-theme"
+	>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section
+				data-background-image="images/Selia_Logo_Azul.png"
+				data-background-size="auto 50%"
+			>
+				<section>
+					<h2 class="r-fit-text">Selia e Irekua</h2>
+				</section>
+			</section>
+			<section data-background-image="images/evento_de_muestreo.png">
+				<section>
+					<h2 class="r-fit-text">Datos de Monitoreo</h2>
+				</section>
+				<section>
+					<h4>Sistema de gestión de datos</h4>
+					<ul>
+						<li>
+							<b class="fragment highlight-red">Irekua</b>: Base de datos y servicios de asistencia
+						</li>
+						<li>
+							<b class="fragment highlight-red">Selia</b>: Aplicación web pública de gestión, consulta y carga
+							de datos.
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Herramienta General</h4>
+					<p>Con estas herrramientas se pretenden resolver los siguientes problemas</p>
+					<ul>
+						<li class="fragment"><span class="fragment highlight-red">Centralizar</span> y <span
+								class="fragment highlight-red"
+							>estandarizar</span>
+							los
+							datos de monitoreo</li>
+						<li class="fragment">Facilitar la <span class="fragment highlight-red">donación</span> de datos
+						</li>
+						<li class="fragment">Permitir la <span class="fragment highlight-red">carga y descarga remota</span> de
+							archivos</li>
+						<li class="fragment"><span class="fragment highlight-red">Exhibir</span> los datos abiertos al público
+							general
+						</li>
+						<li class="fragment">Admitir datos de tipos de <span class="fragment highlight-red">monitoreo
+								diversos</span></li>
+						<li class="fragment">Captar <span class="fragment highlight-red">todos los metadatos</span> del
+							monitoreo. Incluyendo el <span class="fragment highlight-blue">contexto espacio-temporal</span>, las
+							<span class="fragment highlight-blue">herramientas</span> usadas y los <span
+								class="fragment highlight-blue"
+							>detalles metodológicos</span>.
+						</li>
+					</ul>
+				</section>
+				<section>
+					<ul>
+						<li class="fragment">Permitir la <span class="fragment highlight-red">revisión y anotación
+								colaborativa</span> de los datos de monitoreo</li>
+						<li class="fragment">Facilitar la <span class="fragment highlight-red">construcción de algoritmos de
+								aprendizaje de máquina</span> para la detección automatizada de <span
+								class="fragment highlight-blue">eventos de interés</span></li>
+						<li class="fragment"><span class="fragment highlight-red">Integrar</span> los datos de monitoreo con
+							<span class="fragment highlight-blue">flujos de procesamiento automatizado</span></li>
+						<li class="fragment"><span class="fragment highlight-red">Responder</span> a preguntas acerca del <span
+								class="fragment highlight-blue"
+							>estado de
+								un sitio</span> o bien de la <span class="fragment highlight-blue">eficiencia de los métodos</span>
+							de monitoreo</li>
+					</ul>
+				</section>
+			</section>
+			<section
+				data-background-image="images/relational_database.png"
+				data-background-size="auto 100%"
+				data-background-opacity="0.1"
+			>
+				<section>
+					<h2 class="r-fit-text">Irekua</h2>
+				</section>
+				<section>
+					<h4>Bases de Datos Relacionales y Entidades</h4>
+					<p>Irekua es una base de datos relacional diseñada para alojar datos de monitoreo</p>
+					<ul>
+						<li class="fragment">La información está <span class="fragment highlight-red">dividida y organizada</span>
+							en
+							<span class="fragment highlight-blue">entidades</span>. Cada entidad tiene asociada una tabla en
+							la base de datos</li>
+						<li class="fragment">Las entidades tienen <span class="fragment highlight-blue">atributos</span> y <span
+								class="fragment highlight-blue"
+							>relaciones</span> entre sí</li>
+						<li class="fragment">Las entidades pueden tener <span class="fragment highlight-blue">reglas y
+								restricciones</span> para evitar condiciones
+							indeseadas</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Django y Postgresql</h4>
+					<p>Irekua está construido sobre el framework <span class="fragment highlight-red">Django</span> y usa el
+						administrador de base de datos <span class="fragment highlight-red">Postgresql</span></p>
+					<ul>
+						<li class="fragment">Django está escrito en Python</li>
+						<li class="fragment">Django es un framework robusto y amplio que facilita la <span
+								class="fragment highlight-blue"
+							>construcción de servicios y
+								páginas
+								web</span></li>
+						<li class="fragment">Django tiene una buena documentación y una gran comunidad de usuarios</li>
+						<li class="fragment">Postgis es una extensión de postgres para manejar eficientemente <span
+								class="fragment highlight-blue"
+							>datos geográficos</span></li>
+					</ul>
+				</section>
+				<section>
+					<h4>Modelos de Django</h4>
+					<p>En Django las <span class="fragment highlight-current-red"><span
+								class="fragment highlight-blue">Entidades</span></span> se definen a través de <span
+							class="fragment highlight-red"
+						>Modelos</span></p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|5-6|7-9|11-14|16-20|22-25">
+from django.db import models
+from django.core.exceptions import ValidationError
+
+
+class Entidad(models.Model):
+    """Descripción de la Entidad"""
+    # Atributos de la entidad
+    texto = models.CharField()
+    booleano = models.BooleanField()
+
+    # Relaciones entre entidades
+    uno_a_muchos = models.ForeignKey('Entidad2')
+    muchos_a_muchos = models.ManyToManyField('Entidad3')
+    uno_a_uno = models.OneToOneField('Entidad4')
+
+    class Meta:
+        # Restricciones en la base de datos
+        unique_together = [
+            ['texto', 'booleano'],
+        ]
+
+    def clean(self):
+        # Métodos personalizados de validación
+        if 'texto' not in self.texto:
+            raise ValidationError
+				  </code></pre>
+				</section>
+				<section>
+					<p>En Irekua los <span class="red">modelos</span> están organizados en módulos:</p>
+					<ul>
+						<li class="fragment">irekua-database: <span class="text-muted">Usuarios e instituciones</span></li>
+						<li class="fragment">irekua-schemas: <span class="text-muted">Esquemas</span></li>
+						<li class="fragment">irekua-terms: <span class="text-muted">Catálogos de términos</span></li>
+						<li class="fragment">irekua-geo: <span class="text-muted">Sitios y geografía</span></li>
+						<li class="fragment">irekua-items: <span class="text-muted">Archivos y media info</span></li>
+						<li class="fragment">irekua-devices: <span class="text-muted">Dispositivos y marcas</span>
+						</li>
+						<li class="fragment">irekua-annotations: <span class="text-muted">Eventos y anotaciones</span></li>
+						<li class="fragment">irekua-collections: <span class="text-muted">Colecciones</span></li>
+						<li class="fragment">irekua-organisms: <span class="text-muted">Organismos y capturas</span></li>
+						<li class="fragment">irekua-models: <span class="text-muted">Modelos de IA y predicciones</span></li>
+						<li class="fragment">...</li>
+					</ul>
+				</section>
+			</section>
+			<section data-background-image="images/usuarios.png">
+				<section>
+					<h2 class="r-fit-text">Usuarios</h2>
+				</section>
+				<section>
+					<h4>Usuarios</h4>
+					<p><span class="fragment">Para <span class="fragment highlight-red">acceder</span> al sistema las personas
+							deben de <span class="fragment highlight-red">registarse</span> en el sistema.</span><span
+							class="fragment"
+						> Cuando se <span class="fragment highlight-red">crea o modifica</span> un objeto se registra el usuario que
+							lo hizo</span></p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|2-6|8-9|11-12|14-17">
+class User(models.Model):
+    # Datos personales
+    username = models.CharField(unique=True)
+    first_name = models.CharField()
+    last_name = models.CharField()
+    email = models.EmailField(unique=True)
+
+    # Autentificacion
+    password = models.CharField()
+
+    # Afiliacion
+    institutions = models.ManyToManyField('Institution')
+
+    # Tipo de usuario
+    is_superuser = models.BooleanField()
+    is_curator = models.BooleanField()
+    is_developer = models.BooleanField()
+					</code></pre>
+				</section>
+				<section>
+					<h4>Instituciones</h4>
+					<p>Sirven para indicar la afiliación de los usuarios, o los patrocinadores de una colección</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|3-4|6-8|10-12|14-17">
+class Institution(models.Model):
+    # Nombre y código
+    institution_name = models.CharField(unique=True)
+    institution_code = models.CharField()
+
+    # Direccion
+    address = models.CharField()
+    country = models.ChoiceField(choices=COUNTRIES)
+
+    # Imagen y referencia
+    website = models.URLField()
+    logo = models.ImageField()
+
+    # Usuarios. Al registrar un usuario se
+    # pueden especificar la subdependencia
+    # y el puesto, de ser necesario.
+    users = models.ManyToManyField('User')
+					</pre></code>
+				</section>
+			</section>
+			<section
+				data-background-image="images/schemas.svg"
+				data-background-size="auto 60%"
+			>
+				<section>
+					<h2 class="r-fit-text">Esquemas</h2>
+				</section>
+				<section>
+					<h4>Extensibilidad</h4>
+					<p>Para alojar datos originados de una amplia <span class="fragment highlight-red">diversidad de métodos y
+							tipos
+							de
+							monitoreo</span> es deseable poder:</p>
+					<ul>
+						<li class="fragment"><span class="fragment highlight-green">Extender</span> libremente los metadatos
+						</li>
+						<li class="fragment"><span class="fragment highlight-green">Especificar la estructura</span> de
+							metadatos adicionales y evitar los textos libres</li>
+						<li class="fragment"><span class="fragment highlight-green">Documentar</span> el significado de los
+							metadatos adicionales</li>
+						<li class="fragment"><span class="fragment highlight-green">Validar</span> los metadatos adicionales
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h4>JSON Schemas</h4>
+					<q>JSON Schema is a grammar language for defining the <span class="fragment highlight-red">structure</span>,
+						<span class="fragment highlight-red">content</span>, and (to some extent) <span
+							class="fragment highlight-red"
+						>semantics</span> of
+						JSON objects. It lets you specify metadata (data about data) about what an object's <span
+							class="fragment highlight-blue"
+						>properties</span> mean and what
+						values are <span class="fragment highlight-green">valid</span> for those properties.
+					</q>
+				</section>
+				<section>
+					<h4>Esquemas</h4>
+					<p>En Irekua hay una tabla para almacenar y administrar esquemas.</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|2-3|5-7|12-14">
+class Schema(models.Model):
+    name = models.CharField(unique=True)
+    description = models.TextField()
+
+    # Alojar el JSON Schema dentro de un campo
+    # especial de postgres
+    schema = models.JSONField()
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que el esquema es un JSON Schema
+        # válido
+        self.clean_schema()
+					</pre></code>
+				</section>
+				<section>
+					<h4>Ejemplo de un Esquema</h4>
+					<pre><code class="fragment language-json" data-trim data-noescape data-line-numbers="0|2|4|6|7|8-9|12|13-21">
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "type": "object",
+
+  "properties": {
+    "has_payed": { "type": "boolean" },
+    "billing_address": { "$ref": "#/definitions/address" },
+    "shipping_address": { "$ref": "#/definitions/address" }
+  },
+
+  "definitions": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "street_address": { "type": "string" },
+        "city":           { "type": "string" },
+        "state":          { "type": "string" }
+      },
+      "required": ["street_address", "city", "state"]
+    }
+  }
+}
+					</pre></code>
+				</section>
+				<section>
+					<h2>Comentarios</h2>
+					<ul>
+						<li class="fragment">Cuidar el diseño de los esquemas. Buscar la <span
+								class="fragment highlight-red">modularidad</span> y el <span class="fragment highlight-red">reuso</span>
+						</li>
+						<li class="fragment">Gracias al campo JSON de postgres es posible hacer <span
+								class="fragment highlight-red">consultas estructuradas</span>, aunque
+							tienden a ser menos eficientes</li>
+						<li class="fragment">Existen herramientas para generar esquemas JSON:</li>
+					</ul>
+				</section>
+				<section>
+					<iframe
+						data-src="https://jsonschema.net/home"
+						data-preload
+						height="600px"
+						width="100%"
+					></iframe>
+				</section>
+			</section>
+			<section
+				data-background-image="images/taxonomia.png"
+				data-background-opacity="0.2"
+			>
+				<section>
+					<h2 class="r-fit-text">Términos</h2>
+				</section>
+				<section>
+					<h4>Términos</h4>
+					<p>En Irekua se usan términos <span class="fragment highlight-red">catalogados y controlados</span> para
+						describir los archivos. Ejemplos: nombre de una especie, tipo de vegetación, etc.
+					</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-4|5-6|8-11|13-16|18-21|23-28|31-32|34-35|37-38|40-41|44-48|53-55">
+class TermType(models.Model):
+    """Todo término pertenece a una categoría semántica,
+    que en irekua son llamadas tipos de términos.
+    """
+    name = models.CharField(unique=True)
+    description = models.TextField()
+
+    # Se le puede asociar un ícono para identificar
+    # gráficamente este tipo de términos en cualquier
+    # interfaz
+    icon = models.ImageField()
+
+    # Se le puede añadir un esquema para describir los
+    # metadatos adicionales asociados a los términos
+    # de este tipo
+    metadata_schema = models.ForeingKey('Schema')
+
+    # Se le puede añadir otro esquema para describir los
+    # metadatos adicionales para el establecimiento de
+    # una sinonímia entre términos de este tipo
+    synonym_metadata_schema = models.ForeingKey('Schema')
+
+    # Los términos pueden ser categóricos (restringidos a
+    # un catálogo controlado), numéricos o booleanos
+    is_categorical = models.BooleanField()
+    is_numerical = models.BooleanField()
+    is_integer = models.BooleanField()
+    is_boolean = models.BooleanField()
+
+
+class Term(models.Model):
+    term_type = models.ForeignKey('TermType')
+
+    value = models.CharField()
+    description = models.TextField()
+
+    # Una liga con referencias del término
+    url = models.URLField()
+
+    # Metadatos adicionales
+    metadata = models.JSONField()
+
+    class Meta:
+        # Los términos son únicos dentro de su categoría
+        # semántica
+        unique_together = [
+            ['term_type', 'name']
+        ]
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que los metadatos satisfacen el
+        # esquema de metadatos de su tipo de término
+        self.clean_metadata()
+					</pre></code>
+				</section>
+				<section>
+					<h4>Sinónimos</h4>
+					<p><span class="fragment">A veces ocurre que diferentes términos del <span
+								class="fragment highlight-blue">mismo tipo</span>
+							adquieren el mismo significado.</span><span class="fragment"> Esto se registra para que las consultas de
+							información lo consideren</span>
+					</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|2-6|8-10|13-17|22-23|25-28">
+class Synonym(models.Model):
+    # Términos declarados como sinonímicos
+    # (source == target). El orden puede ser usado
+    # para indicar preferencia de uso
+    source = models.ForeignKey('Term')
+    target = models.ForeignKey('Term')
+
+    # Metadatos adicionales de la declaración de
+    # la sinonimia.
+    metadata = models.ForeignKey('Term')
+
+    class Meta:
+        # Sólo se puede registrar una vez la sinonimia
+        # entre dos términos
+        unique_together = [
+             ['source', 'target']
+        ]
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que los términos sean del mismo tipo
+        self.clean_same_term_type()
+
+        # Revisar que los metadatos adicionales
+        # satisfacen el esquema de metadatos de sinonímia
+        # para este tipo de terminos
+        self.clean_metadata()
+					</pre></code>
+				</section>
+				<section>
+					<h4>Implicaciones</h4>
+					<p>A veces el significado de un término implica otro con significado más amplio. Ejemplo: decir que un animal
+						es un
+						Puma implica decir que es un Mamífero</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-5|6-7|9-11|14|15-18|20-22|27-29|31-34">
+class EntailmentType(models.Model):
+    """Las implicaciones entre términos de tipo A y B
+    puede tener un significado diferente que entre términos
+    de tipo C y D.
+    """
+    source_type = models.ForeignKey('TermType')
+    target_type = models.ForeignKey('TermType')
+
+    # Se añade un campo de metadatos adicionales a la
+    # declaración de la implicación
+    metatadata_schema = models.ForeignKey('Schema')
+
+
+class Entailment(models.Model):
+    # Términos que se implican
+    # (source => target).
+    source = models.ForeignKey('Term')
+    target = models.ForeignKey('Term')
+
+    # Metadatos adicionales de la declaración de
+    # la implicación.
+    metadata = models.JSONField()
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que ya se haya declarado el
+        # tipo de implicación entre términos de ese tipo
+        self.check_entailment_type_exists()
+
+        # Revisar que los metadatos de la implicación
+        # satisfagan el esquema de metadatos del tipo
+        # de implicación
+        self.check_metadata()
+					</pre></code>
+				</section>
+			</section>
+			<section data-background-image="images/sitios.png">
+				<section>
+					<h2 class="r-fit-text">Sitios</h2>
+				</section>
+				<section>
+					<h4>Localidad</h4>
+					<p>
+						<span class="fragment">Las localidades son <span class="fragment highlight-red">segmentos</span>
+							con <span class="fragment highlight-red">identidad
+								autoritativa</span>.</span> <span class="fragment">La división entre localidades puede
+							responder, por ejemplo, a fronteras administrativas.</span>
+					</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-4|5-6|8-11|13-15|18-19|21-22|24-25|27-28|30-31|34-36|41-43">
+class LocalityType(models.Model):
+    """Distintas maneras de segmentar el espacio
+    resultan en localidades de diferente tipo.
+    """
+    name = models.CharField()
+    description = models.TextField()
+
+    # Referencias
+    source = models.URLField()
+    original_datum = models.CharField()
+    publication_date = models.DateField()
+
+    # Esquema de metadatos para localidades
+    # de este tipo
+    metadata_schema = models.ForeignKey('Schema')
+
+
+class Locality(models.Model):
+    locality_type = models.ForeignKey('LocalityType')
+
+    name = models.CharField()
+    description = models.TextField()
+
+    # Segmento de la localidad
+    geometry = models.MultiPolygonField()
+
+    # Metadatos de la localidad
+    metadata = models.JSONField()
+
+    # Anidamiento de localidades
+    is_part_of = models.ManyToManyField('Locality')
+
+    class Meta:
+        unique_together = [
+            ['locality_type', 'name']
+        ]
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que los metadatos satisfacen el esquema
+        # que exige el tipo de localidad.
+        self.clean_metadata()
+					</pre></code>
+				</section>
+				<section>
+					<h4>Sitios</h4>
+					<p><span class="fragment">Cada usuario registra los sitios en los que ha trabajado.</span>
+						<span class="fragment">Los sitios pueden tener <span class="fragment highlight-red">distintas
+								geometrías</span> (punto, linea,
+							polígono, etc)</span></p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-3|4-5|7-8|10-13|15-16|19-23|28-30">
+# Al "heredar" de IrekuaUserModel, se crean atributos
+# que registran el usuario que lo creó y modificó
+class Site(IrekuaUserModel):
+    # Nombre personal
+    name = models.CharField()
+
+    # Localidad del sitio
+    locality = models.ForeingKey('Locality')
+
+    # La geometría puede ser de tipo Point, LineString
+    # Polygon, MultiPoint, MultiLinestring, MultiPolygon
+    geometry_type = models.ChoiceField(choices=GEOMETRIES)
+    geometry = models.GeometryField(srid='EPSG:4326')
+
+    # Este campo sólo es válido en los sitios puntuales
+    altitude = models.FloatField(optional=True)
+
+    class Meta:
+        # Los nombres de sitio son únicos
+        # para cada usuario
+        unique_together = [
+            ["name", "created_by"],
+        ]
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que la localidad y la geometría
+        # se tocan
+        self.clean_locality()
+					</pre></code>
+				</section>
+				<section>
+					<h2>Descriptores</h2>
+					<p>Los descriptores de sitio sirven para detallar algunas <span class="fragment highlight-red">características
+							invariantes</span>
+						de los sitios. Ejemplos: tipo de suelo, variables climáticas, ecoregión, etc.
+					</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-5|6-7|9-11|13-15|17-18|21-22|24-25|27-28|30">
+class SiteDescriptorType(models.Model):
+    """Al igual que los términos, los descriptores pueden
+    pertenecer a distintas categorías semánticas. Estas
+    categorías son llamadas tipo de descriptor.
+    """
+    name = models.CharField(unique=True)
+    description = models.TextField()
+
+    # Puede asignarse un ícono al tipo de descriptor
+    # para identificarlo gráficamente en una interfaz
+    icon = models.ImageField()
+
+    # Fuente de los datos
+    metadata = models.TextField()
+    source = models.URLField()
+
+    # Esquema de metadatos para descriptores de este tipo
+    metadata_schema = models.ForeignKey('Schema')
+
+
+class SiteDescriptor(models.Model):
+    descriptor_type = models.ForeignKey('SiteDescriptorType')
+
+    value = models.CharField()
+    description = models.TextField('SiteDescriptorType')
+
+    # Metadatos adicionales
+    metadata = models.JSONField()
+
+    ...
+					</pre></code>
+				</section>
+			</section>
+			<section data-background-image="images/dispositivos.png">
+				<section>
+					<h2 class="r-fit-text">Dispositivos</h2>
+				</section>
+				<section>
+					<h2>Tipos de Dispositivos</h2>
+					<p>En Irekua es posible registrar dispositivos aparte de cámaras trampa y grabadoras. La lista de tipos de
+						dipositivo
+						que pueden emplearse es extensible
+					</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|2-3|5-7|9-15">
+class DeviceType(models.Model):
+    name = models.CharField(unique=True)
+    description = models.TextField()
+
+    # Puede asignarse un ícono al tipo de dispositivo
+    # para identificarlo gráficamente en una interfaz
+    icon = models.ImageField()
+
+    # Una manera de asegurar que los metadatos de un
+    # archivo son consistentes es registrando el tipo
+    # de media de los archivos producidos por los
+    # dispositivos de cierto tipo
+    mime_types = models.MultipleChoiceField(
+        choices=MIME_TYPES,
+    )
+
+    # Esquema para metadatos adicionales para los
+    # dispositivos de este tipo
+		metadata_schema = models.ForeignKey('Schema')
+					</pre></code>
+				</section>
+				<section>
+					<h2>Marcas y Modelos</h2>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-4|7-8|10-11|13-17|19-22|25-27">
+class DeviceBrand(models.Model):
+    name = models.CharField()
+    website = models.URLField()
+    logo = models.ImageField()
+
+
+class Device(models.Model):
+    device_type = models.ForeignKey('DeviceType')
+
+    brand = models.ForeignKey('DeviceBrand')
+    model = models.CharField()
+
+    # En algunos casos existen metadatos adicionales
+    # de los dispositivos de ciertos modelos que podrían
+    # ser relevantes al resultado de monitoreo. Por
+    # ejemplo: uso de camuflaje, tipo de carcasa, etc.
+    metadata_schema = models.ForeignKey('DeviceType')
+
+    # Muchos dipositivos pueden ser configurados
+    # previo a su despliegue. El esquema de configuración
+    # describe las opciones de configuración relevantes
+    configuration_schema = models.ForeignKey('DeviceType')
+
+    class Meta:
+        unique_together = [
+            ['brand', 'model'],
+        ]
+					</pre></code>
+				</section>
+				<section>
+					<h2>Dispositivos físicos</h2>
+					<p>Cada usuario registra los dispositivos en los que ha usado o posee</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-2|3|5-6|8-10|12-14|16-18|23-25|27-29|31-33">
+# Hereda de IrekuaUserModel por lo que tiene dueño
+class PhysicalDevice(IrekuaUserModel):
+    device = models.ForeignKey('Device')
+
+    # Nombre personal para el dispositivo
+    name = models.CharField()
+
+    # De ser posible se registra el número de serie del
+    # dispositivo
+    serial_number = models.CharField()
+
+    # Metadatos adicionales por ser un dispositivo
+    # de cierto tipo
+    device_type_metadata = models.JSONField()
+
+    # Metadatos adicionales por ser de un modelo
+    # particular
+    device_metadata = models.JSONField()
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que los metadatos adicionales del
+        # tipo de dispositivo sean válidos
+        self.clean_device_type_metadata()
+
+        # Revisar que los metadatos adicionales del
+        # modelo sean válidos
+        self.clean_device_type_metadata()
+
+        # Revisar que el número de serie sea único
+        # en caso de que si se haya capturado
+        self.clean_serial_number()
+					</pre></code>
+				</section>
+			</section>
+			<section data-background-image="images/metodologias.png">
+				<section>
+					<h2 class="r-fit-text">Metodología</h2>
+				</section>
+				<section>
+					<h4>Metodología de monitoreo</h4>
+					<p>Irekua se diseñó para registrar la <span class="fragment highlight-red">metodología</span> que produjo los datos de monitoreo. Se pueden almacenar datos de</p>
+					<ul>
+						<li class="fragment">Las <span class="fragment highlight-green">preparaciones del sitio</span>, como levantamientos previos o intervenciones intencionales</li>
+						<li class="fragment">La <span class="fragment highlight-green">visita a campo</span>, como información logística, levantamientos periódicos, avistamiento ocasional</li>
+						<li class="fragment">La <span class="fragment highlight-green">colocación de los sensores</span>, como información contextual, de posicionamiento, ...</li>
+						<li class="fragment">La <span class="fragment highlight-green">configuración de los sensores</span> desplegados</li>
+					</ul>
+				</section>
+				<section>
+					<h4>Tipos de Sitio</h4>
+					<p>A veces los sitios son elegidos por satisfacer un criterio particular. O puede ser deseable categorizar los
+						sitios por el tipo de monitoreo que se lleva a cabo en ellos.</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|2-3|5-7|9-14|16-20|22-29">
+class SiteType(models.Model):
+    name = models.CharField(unique=True)
+    description = models.TextField()
+
+    # Puede asignarse un ícono al tipo de sitio
+    # para identificarlo gráficamente en una interfaz
+    icon = models.ImageField()
+
+    # Se describe el tipo de descriptores
+    # que son usados para describir sitios de este
+    # tipo
+    site_descriptor_types = models.ManyToManyField(
+        'SiteDescriptorType',
+    )
+
+    # Es posible extender el metadato de los sitios
+    # de este tipo. Por ejemplo: la evaluación rápida
+    # de SiPeCam, levantamiento preeliminar de la
+    # estructura de la vegetación, etc.
+    metadata_schema = models.ForeignKey('Schema')
+
+    # Estos campos determinan si es posible declarar
+    # un sitio de este tipo con las siguientes geometrias
+    point_site = models.BooleanField()
+    linestring_site = models.BooleanField()
+    polygon_site = models.BooleanField()
+    multilinestring_site = models.BooleanField()
+    multipoint_site = models.BooleanField()
+    multipolygon_site = models.BooleanField()
+					</pre></code>
+				</section>
+				<section>
+					<h2>Eventos de Muestreo</h2>
+					<p>Se refiere a una <span class="fragment highlight-red">salida a campo</span> a un <span class="fragment highlight-blue">sitio</span> particular, en el cual (potencialmente) se dejan
+						dispositivos durante un <span class="fragment highlight-blue">intervalo de tiempo</span> determinado</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-4|5-6|8-9|11-13|15-18|20-23|25-28|30-33|36-37|39-41|43-46|48-50|52-53|58-61|63-65">
+class SamplingEventType(models.Model):
+    """Cada metodología de salida a campo forma un
+    tipo de evento de muestreo.
+    """
+    name = models.CharField()
+    description = models.TextField()
+
+    # Ícono a mostrar en la interfaz
+    icon = models.ImageField()
+
+    # Un esquema para registrar metadatos adicionales
+    # de la salida a campo.
+    metadata_schema = models.ForeignKey('Schema')
+
+    # Es posible restringir los tipos de sitios en
+    # los que se pueden realizar muestreos de este tipo
+    restrict_site_types = models.CharField()
+    site_types = models.CharField()
+
+    # Es posible restringir los tipos de artículos
+    # que se pueden generar en muestreos de este tipo
+    restrict_item_types = models.CharField()
+    item_types = models.CharField()
+
+    # Es posible restringir los tipos de despliegue
+    # que se pueden realizar en muestreos de este tipo
+    restrict_deployment_types = models.CharField()
+    deployment_types = models.CharField()
+
+    # Además, puede indicarse la distancia máxima
+    # de cualquier despliegue al sitio monitoreado
+    restrict_deployment_positions = models.CharField()
+    deployment_distance = models.CharField()
+
+
+class SamplingEvent(IrekuaUserModel):
+    sampling_event_type = models.ForeignKey()
+
+    # Sitio en el cual se realizó el levantamiento
+    # de datos
+    site = models.ForeignKey()
+
+    # Fecha de inicio y término del evento de
+    # muestreo
+    started_on = models.ForeignKey()
+    ended_on = models.ForeignKey()
+
+    # Metadatos adicionales relacionados al tipo
+    # de evento de muestreo
+    metadata = models.ForeignKey()
+
+    # Comentarios en texto libre del usuario
+    commentaries = models.ForeignKey()
+
+    def clean(self):
+        super().clean()
+
+        # Revisar que el tipo de sitio en el cual
+        # se realiza el monitoreo sea compatible
+        # con el tipo de evento de muestreo
+        self.clean_site_type()
+
+        # Revisar que los metadatos satisfagan
+        # el esquema dado por el tipo de muestreo
+        self.clean_metadata()
+					</pre></code>
+				</section>
+				<section>
+					<h2>Despliegues</h2>
+					<p>Se refiere a la acción de <span class="fragment highlight-red">colocar</span> un dispositivo en campo por un intervalo determinado de tiempo.</p>
+					<pre><code class="fragment language-python" data-trim data-noescape data-line-numbers="0|1-5|6-7|9-10|12-13|15-18|20-22|24-27|30-31|33-35|37-38|40-42|44-46|48-50|52-54|56-57">
+class DeploymentType(models.Model):
+    """Es posible registrar diferentes maneras de
+    colocar un dispositivo, aquí llamados tipos de
+    despliegue.
+    """
+    name = models.CharField()
+    description = models.TextField()
+
+    # Ícono a mostrar en la interfaz
+    icon = models.CharField()
+
+    # Tipo de dispositivo que se está desplegando
+    device_type = models.CharField()
+
+    # Un esquema para registrar metadatos adicionales
+    # de este tipo de despliegues, como
+    # información de la posición del dispositivo, etc
+    metadata_schema = models.ForeignKey('Schema')
+
+    # Se pueden restringir los tipos de artículos
+    # que se pueden generar en dicho despliegue.
+    restrict_item_types = models.CharField()
+
+    # El listado de tipos de artículos admisibles
+    # sirve tanto para validar como para describir
+    # el tipo de despliegue y su utilidad.
+    item_types = models.CharField()
+
+
+class Deployment(IrekuaUserModel):
+    deployment_type = models.ForeignKey('DeploymentType')
+
+    # Todo despliegue debe de ocurrir en un evento
+    # de muestreo
+    sampling_event = models.ForeignKey('SamplingEvent')
+
+    # Y se realiza con un dispositivo*
+    physical_device = models.ForeignKey('PhysicalDevice')
+
+    # Información temporal
+    deployed_on = models.DateTimeField()
+    recovered_on = models.DateTimeField()
+
+    # Ubicación exacta de colocación
+    geo_ref = models.PointField()
+    altitude = models.FloatField()
+
+    # Metadatos adicionales asociados al tipo de
+    # despliegue
+    metadata = models.JSONField()
+
+    # Información de la configuración del dispositivo
+    # desplegado. Por ejemplo: sensibilidad de cámara
+    configuration = models.JSONField()
+
+    # Comentarios en texto libre del usuario
+    commentaries = models.TextField()
+					</pre></code>
+				</section>
+			</section>
+			<section data-background-image="images/archivos.png">
+				<section>
+					<h2 class="r-fit-text">Archivos</h2>
+				</section>
+				<section>
+					<h2>Artículos</h2>
+				</section>
+				<section>
+					<h2>Licencias</h2>
+				</section>
+				<section>
+					<h2>Términos</h2>
+				</section>
+				<section>
+					<h2>Eventos</h2>
+				</section>
+				<section>
+					<h2>Anotaciones</h2>
+				</section>
+			</section>
+			<section data-background-image="images/organismos.png">
+				<section>
+					<h2 class="r-fit-text">Organismos</h2>
+				</section>
+				<section>
+					<h2>Organismos</h2>
+				</section>
+				<section>
+					<h2>Capturas</h2>
+				</section>
+			</section>
+			<section data-background-image="images/colecciones.png">
+				<section>
+					<h2 class="r-fit-text">Colecciones</h2>
+				</section>
+				<section>
+					<h2>Configuraciones</h2>
+				</section>
+				<section>
+					<h2>Usuarios</h2>
+				</section>
+				<section>
+					<h2>Roles</h2>
+				</section>
+				<section>
+					<h2>Licencias</h2>
+				</section>
+				<section>
+					<h2>Administradores</h2>
+				</section>
+				<section>
+					<h2>Sitios y Dispositivos</h2>
+				</section>
+				<section>
+					<h2>Eventos de Muestreo y Despliegues</h2>
+				</section>
+				<section>
+					<h2>Organismos y Capturas</h2>
+				</section>
+				<section>
+					<h2>Artículos y Anotaciones</h2>
+				</section>
+			</section>
+		</div>
+	</div>
+
+	<script src="reveal.js/dist/reveal.js"></script>
+	<script src="reveal.js/plugin/notes/notes.js"></script>
+	<script src="reveal.js/plugin/markdown/markdown.js"></script>
+	<script src="reveal.js/plugin/highlight/highlight.js"></script>
+	<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+	});
+	</script>
+</body>
+
+</html>
