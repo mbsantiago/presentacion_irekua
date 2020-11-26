@@ -638,7 +638,7 @@ class SiteDescriptor(models.Model):
     descriptor_type = models.ForeignKey('SiteDescriptorType')
 
     value = models.CharField()
-    description = models.TextField('SiteDescriptorType')
+    description = models.TextField()
 
     # Metadatos adicionales
     metadata = models.JSONField()
@@ -698,12 +698,12 @@ class Device(models.Model):
     # de los dispositivos de ciertos modelos que podrían
     # ser relevantes al resultado de monitoreo. Por
     # ejemplo: uso de camuflaje, tipo de carcasa, etc.
-    metadata_schema = models.ForeignKey('DeviceType')
+    metadata_schema = models.ForeignKey('Schema')
 
     # Muchos dipositivos pueden ser configurados
     # previo a su despliegue. El esquema de configuración
     # describe las opciones de configuración relevantes
-    configuration_schema = models.ForeignKey('DeviceType')
+    configuration_schema = models.ForeignKey('Schema')
 
     class Meta:
         unique_together = [
@@ -810,7 +810,7 @@ class SamplingEventType(models.Model):
     """Cada metodología de salida a campo forma un
     tipo de evento de muestreo.
     """
-    name = models.CharField()
+    name = models.CharField(unique=True)
     description = models.TextField()
 
     # Ícono a mostrar en la interfaz
@@ -822,43 +822,43 @@ class SamplingEventType(models.Model):
 
     # Es posible restringir los tipos de sitios en
     # los que se pueden realizar muestreos de este tipo
-    restrict_site_types = models.CharField()
-    site_types = models.CharField()
+    restrict_site_types = models.BooleanField()
+    site_types = models.ManyToManyField('SiteType')
 
     # Es posible restringir los tipos de artículos
     # que se pueden generar en muestreos de este tipo
-    restrict_item_types = models.CharField()
-    item_types = models.CharField()
+    restrict_item_types = models.BooleanField()
+    item_types = models.ManyToManyField('ItemType')
 
     # Es posible restringir los tipos de despliegue
     # que se pueden realizar en muestreos de este tipo
-    restrict_deployment_types = models.CharField()
-    deployment_types = models.CharField()
+    restrict_deployment_types = models.BooleanField()
+    deployment_types = models.ManyToManyField('DeploymentType')
 
     # Además, puede indicarse la distancia máxima
     # de cualquier despliegue al sitio monitoreado
-    restrict_deployment_positions = models.CharField()
-    deployment_distance = models.CharField()
+    restrict_deployment_positions = models.BooleanField()
+    deployment_distance = models.FloatField()
 
 
 class SamplingEvent(IrekuaUserModel):
-    sampling_event_type = models.ForeignKey()
+    sampling_event_type = models.ForeignKey('SamplingEventType')
 
     # Sitio en el cual se realizó el levantamiento
     # de datos
-    site = models.ForeignKey()
+    site = models.ForeignKey('Site')
 
     # Fecha de inicio y término del evento de
     # muestreo
-    started_on = models.ForeignKey()
-    ended_on = models.ForeignKey()
+    started_on = models.DateTimeField()
+    ended_on = models.DateTimeField()
 
     # Metadatos adicionales relacionados al tipo
     # de evento de muestreo
-    metadata = models.ForeignKey()
+    metadata = models.JSONField()
 
     # Comentarios en texto libre del usuario
-    commentaries = models.ForeignKey()
+    commentaries = models.TextField()
 
     def clean(self):
         super().clean()
@@ -882,14 +882,14 @@ class DeploymentType(models.Model):
     colocar un dispositivo, aquí llamados tipos de
     despliegue.
     """
-    name = models.CharField()
+    name = models.CharField(unique=True)
     description = models.TextField()
 
     # Ícono a mostrar en la interfaz
     icon = models.CharField()
 
     # Tipo de dispositivo que se está desplegando
-    device_type = models.CharField()
+    device_type = models.ForeignKey('DeviceType')
 
     # Un esquema para registrar metadatos adicionales
     # de este tipo de despliegues, como
@@ -898,12 +898,12 @@ class DeploymentType(models.Model):
 
     # Se pueden restringir los tipos de artículos
     # que se pueden generar en dicho despliegue.
-    restrict_item_types = models.CharField()
+    restrict_item_types = models.BooleanField()
 
     # El listado de tipos de artículos admisibles
     # sirve tanto para validar como para describir
     # el tipo de despliegue y su utilidad.
-    item_types = models.CharField()
+    item_types = models.ManyToManyField('ItemType')
 
 
 class Deployment(IrekuaUserModel):
